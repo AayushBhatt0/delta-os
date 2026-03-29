@@ -10,7 +10,7 @@ set -euo pipefail
 REPO_URL="${REPO_URL:-https://github.com/AayushBhatt0/delta-os.git}"
 REPO_DIR="${REPO_DIR:-$HOME/OS}"
 BRANCH="${BRANCH:-main}"
-TAILS_BUILD_OPTIONS="${TAILS_BUILD_OPTIONS:-noram ignorechanges cpus=$(nproc)}"
+TAILS_BUILD_OPTIONS="${TAILS_BUILD_OPTIONS:-noram ignorechanges nomergebasebranch cpus=$(nproc)}"
 
 if ! command -v apt-get >/dev/null 2>&1; then
 	echo "ERROR: apt-get not found. This script supports Debian/Ubuntu-based systems." >&2
@@ -42,6 +42,7 @@ $SUDO apt-get install -y \
 	qemu-system-x86 \
 	qemu-utils \
 	vmdb2 \
+	acl \
 	gnupg \
 	lsb-release \
 	curl \
@@ -101,6 +102,15 @@ for group in kvm libvirt libvirt-qemu; do
 	fi
 done
 
+# On fresh sessions, new group membership is not always active yet.
+# Grant immediate socket access so vagrant/libvirt can connect without relogin.
+if [[ -S /var/run/libvirt/libvirt-sock ]] && command -v setfacl >/dev/null 2>&1; then
+	$SUDO setfacl -m "u:${CURRENT_USER}:rw" /var/run/libvirt/libvirt-sock || true
+fi
+if [[ -S /var/run/libvirt/libvirt-sock-ro ]] && command -v setfacl >/dev/null 2>&1; then
+	$SUDO setfacl -m "u:${CURRENT_USER}:r" /var/run/libvirt/libvirt-sock-ro || true
+fi
+
 echo "[7/10] Checking KVM availability..."
 if [[ ! -e /dev/kvm ]]; then
 	echo "WARNING: /dev/kvm is missing. Nested virtualization may be disabled by your provider."
@@ -121,6 +131,23 @@ fi
 
 echo "[9/11] Syncing submodules..."
 git submodule update --init --recursive
+
+# On forks, origin/<base-branch> might not exist. Rake expects BASE_BRANCH_GIT_COMMIT
+# to be non-empty before it even checks build options.
+if [[ -z "${BASE_BRANCH_GIT_COMMIT:-}" ]]; then
+	BASE_BRANCH_NAME="$(head -n1 config/base_branch)"
+	if git rev-parse --verify --quiet "origin/${BASE_BRANCH_NAME}" >/dev/null; then
+		BASE_BRANCH_GIT_COMMIT="$(git rev-parse "origin/${BASE_BRANCH_NAME}")"
+	else
+		echo "WARNING: origin/${BASE_BRANCH_NAME} not found; using HEAD for BASE_BRANCH_GIT_COMMIT."
+		BASE_BRANCH_GIT_COMMIT="$(git rev-parse HEAD)"
+		case " ${TAILS_BUILD_OPTIONS} " in
+			*" nomergebasebranch "*) ;;
+			*) TAILS_BUILD_OPTIONS="${TAILS_BUILD_OPTIONS} nomergebasebranch" ;;
+		esac
+	fi
+	export BASE_BRANCH_GIT_COMMIT
+fi
 
 echo "[10/11] Fixing executable permissions for build scripts..."
 # Repos initialized on Windows can lose executable bits when first imported.
