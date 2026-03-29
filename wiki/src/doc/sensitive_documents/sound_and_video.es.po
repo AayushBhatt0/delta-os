@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: Tails\n"
+"Report-Msgid-Bugs-To: tails-l10n@boum.org\n"
+"POT-Creation-Date: 2021-06-10 19:12-0500\n"
+"PO-Revision-Date: 2020-10-05 05:30+0000\n"
+"Last-Translator: emmapeel <emma.peel@riseup.net>\n"
+"Language-Team: Spanish <https://translate.tails.boum.org/projects/tails/"
+"first_stepsindex/es/>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.8\n"
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!meta title=\"Sound and video\"]]\n"
+msgstr "[[!meta title=\"Sonido y vídeo\"]]\n"
+
+#. type: Plain text
+msgid "Tails includes several sound and video applications:"
+msgstr "Tails incluye varias aplicaciones de sonido y vídeo:"
+
+#. type: Bullet: '  - '
+msgid ""
+"**<span class=\"application\">[Audacity](https://www.audacityteam.org/)</"
+"span>** is a multi-track audio editor designed for recording, playing and "
+"editing of digital audio.  See the [official documentation](http://manual."
+"audacityteam.org/)."
+msgstr ""
+"**<span class=\"application\">[Audacity](https://www.audacityteam.org/)</"
+"span>** es un editor de audio multipista diseñado para grabar, reproducir y "
+"editar audio digital.  Ver la[documentación oficial](http://manual."
+"audacityteam.org/)."
+
+#. type: Bullet: '  - '
+msgid ""
+"**<span class=\"application\">[Brasero](https://wiki.gnome.org/Apps/"
+"Brasero)</span>** is an application to burn, copy, and erase CD and DVD "
+"media: audio, video, or data.  See the [official documentation](https://help."
+"gnome.org/users/brasero/stable/)."
+msgstr ""
+"**<span class=\"application\">[Brasero](https://wiki.gnome.org/Apps/"
+"Brasero)</span>** es una aplicación para grabar, copiar y borrar medios de "
+"CD y DVD: audio, vídeo, o datos.  Ver la [documentación oficial](https://"
+"help.gnome.org/users/brasero/stable/)."
+
+#. type: Bullet: '  - '
+msgid ""
+"**<span class=\"application\">[Sound Juicer](https://wiki.gnome.org/Apps/"
+"SoundJuicer)</span>** is a CD ripper application."
+msgstr ""
+"**<span class=\"application\">[Sound Juicer](https://wiki.gnome.org/Apps/"
+"SoundJuicer)</span>** es una aplicación de extracción de CD."
+
+#. type: Bullet: '  - '
+msgid ""
+"**<span class=\"application\">Sound Recorder</span>** is a simple "
+"application to record sound. Sound clips recorded using <span class="
+"\"application\">Sound Recorder</span> are saved to the <span class=\"filename"
+"\">Recordings</span> folder."
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid ""
+"**<span class=\"application\">Videos</span>** is an audio and video player."
+msgstr ""
+"**<span class=\"application\">Videos</span>** es un reproductor de audio y "
+"video."
+
+#. type: Plain text
+#, no-wrap
+msgid ""
+"    For more advanced features, you can install the\n"
+"    [<span class=\"application\">VLC</span> media player](https://www.videolan.org/vlc/)\n"
+"    using the [[Additional Software|doc/first_steps/additional_software]] feature.\n"
+msgstr ""
+"    Para funciones más avanzadas, puedes instalar el\n"
+"    [<span class=\"application\">VLC</span> media player](https://www.videolan.org/vlc/)\n"
+"    usando la funcionalidad [[Additional Software|doc/first_steps/additional_software]] .\n"
+
+#. type: Plain text
+#, no-wrap
+msgid ""
+"These applications can be started from the\n"
+"<span class=\"menuchoice\">\n"
+"  <span class=\"guimenu\">Applications</span>&nbsp;▸\n"
+"  <span class=\"guisubmenu\">Sound & Video</span></span> menu.\n"
+msgstr ""
+"Estas aplicaciones se pueden iniciar desde\n"
+"<span class=\"menuchoice\">\n"
+"  <span class=\"guimenu\">Aplicaciones</span>&nbsp;▸\n"
+"  <span class=\"guisubmenu\">Sonido & Vídeo</span></span> menu.\n"
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!inline pages=\"doc/sensitive_documents/persistence\" raw=\"yes\" sort=\"age\"]]\n"
+msgstr "[[!inline pages=\"doc/sensitive_documents/persistence.es\" raw=\"yes\" sort=\"age\"]]\n"
+
+#. type: Plain text
+#, fuzzy, no-wrap
+#| msgid "[[!inline pages=\"doc/sensitive_documents/metadata\" raw=\"yes\" sort=\"age\"]]\n"
+msgid "[[!inline pages=\"doc/sensitive_documents/metadata.inline\" raw=\"yes\" sort=\"age\"]]\n"
+msgstr "[[!inline pages=\"doc/sensitive_documents/metadata.es\" raw=\"yes\" sort=\"age\"]]\n"

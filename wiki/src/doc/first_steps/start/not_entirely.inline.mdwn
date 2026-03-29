@@ -1,0 +1,19 @@
+[[!meta robots="noindex"]]
+
+Use this section if the Boot Loader appears but not the Welcome Screen
+when you start Tails.
+
+<h2>Verify your Tails USB stick</h2>
+
+[[!inline pages="install/inc/steps/basic_troubleshooting.inline" raw="yes" sort="age"]]
+
+<h2 id="troubleshooting-mode">Try the Troubleshooting Mode</h2>
+
+In the Boot Loader, choose **Troubleshooting Mode**, which works better on
+some computers.
+
+<h2 id="graphics">Check our list of known issues on graphics cards</h2>
+
+If the computer displays the error message **Error starting GDM with your
+graphics card**, refer to our [[list of known issues with graphics
+cards|support/known_issues/graphics]].

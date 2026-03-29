@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2020-04-12 16:10+0200\n"
+"PO-Revision-Date: 2020-03-07 11:29+0000\n"
+"Last-Translator: emmapeel <emma.peel@riseup.net>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.5.1\n"
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!meta date=\"Mon, 9 Dec 2019 19:00:00 +0000\"]]\n"
+msgstr ""
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!meta title=\"Our plans for 2020\"]]\n"
+msgstr ""
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!pagetemplate template=\"news.tmpl\"]]\n"
+msgstr "[[!pagetemplate template=\"news.tmpl\"]]\n"
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!tag announce]]\n"
+msgstr "[[!tag announce]]\n"
+
+#. type: Plain text
+msgid ""
+"On October 7, we launched our donation campaign by explaining [[why "
+"supporting Tails is more important than ever|news/2019-fundraiser]]. On "
+"October 31, we summarized [[what we did in 2019 to make Tails easier to "
+"adopt by new users|news/achievements_in_2019]]. Today we pass on to you our "
+"plans for 2020."
+msgstr ""

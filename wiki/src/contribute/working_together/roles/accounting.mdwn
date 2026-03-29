@@ -1,0 +1,35 @@
+[[!meta title="Accounting and management team"]]
+[[!meta robots="noindex"]]
+
+The Accounting Team is responsible for a mix of accounting,
+and management tasks:
+
+- Accounting:
+  - Keeping an accounting of the money held by our fiscal sponsors.
+  - Tell workers when they can get paid for their work.
+  - Process reimbursements of contributors' expenses.
+  - Interface with our fiscal sponsors.
+
+- Budgeting:
+  - Build financial reports for both internal and public use.
+  - Propose a budget each year to plan our expenses. This
+    process also helps review the work of the different teams,
+    adjust their mission, check the availability, needs, and desires of
+    workers, etc.
+  - Help <tails@boum.org> take decisions on how to spend our money. The
+    Accounting Team is *not* the entity that decides how our money is
+    spent and this is the responsability of a larger set of
+    contributors, usually <tails@boum.org>, sometimes
+    tails-summit@boum.org.
+
+- Management:
+  - Help teams recruit and onboard new members, especially regarding the
+    organizational and financial aspects.
+  - Build documentation to make this recruiting and onboarding easier.
+  - Move forward project-wide discussions dealing with money and paid
+    work like reimbursement, sponsorship, and compensation policies,
+    etc.
+  - Help teams resolve internal conflicts or project management issues
+    that they cannot solve by themselves.
+  - Identify overloaded teams and contributors and help solve problems
+    regarding workload and calendar.

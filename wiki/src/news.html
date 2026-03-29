@@ -1,0 +1,34 @@
+<div>[[!meta title="News"]]</div>
+
+[[!meta stylesheet="hide-breadcrumbs" rel="stylesheet" title=""]]
+
+<ul id="news-subscriptions">
+
+<li>
+  <p>Subscribe to the [[amnesia-news mailing
+  list|about/contact#amnesia-news]] to receive the same news
+  by email:</p>
+  <form method="POST" action="https://www.autistici.org/mailman/subscribe/amnesia-news">
+          <input name="email" value=""/>
+          <input type="submit" value="Subscribe"/>
+  </form>
+</li>
+
+<li>
+  <p>Follow us on Twitter <a href="https://twitter.com/tails_live">@Tails_live</a>.</p>
+</li>
+
+</ul>
+
+<!-- Inlined news -->
+
+<div>
+[[!inline pages="page(news/*) and !news/*/* and !news/discussion and (currentlang() or news/report_2* or news/test_*)" show="10" sort="-meta(date) age -path"]]
+</div>
+
+<!-- Feed buttons -->
+
+<div>
+[[!inline pages="page(news/*) and !news/*/* and !news/discussion and (currentlang() or news/report_2* or news/test_*) and tagged(announce)"
+show="10" feeds="yes" feedonly="yes" feedfile="emails" sort="-meta(date) age -path"]]
+</div>

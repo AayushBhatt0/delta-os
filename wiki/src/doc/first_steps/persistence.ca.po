@@ -1,0 +1,156 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: tails-l10n@boum.org\n"
+"POT-Creation-Date: 2020-09-11 17:23+0000\n"
+"PO-Revision-Date: 2018-07-02 06:19+0000\n"
+"Last-Translator: emmapeel <emma.peel@riseup.net>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.10.1\n"
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!meta title=\"Encrypted Persistent Storage\"]]\n"
+msgstr ""
+
+#. type: Plain text
+msgid ""
+"If you start Tails from a USB stick, you can create a Persistent Storage in "
+"the free space left on the USB stick.  The files and settings stored in the "
+"Persistent Storage are saved encrypted and remain available across different "
+"working sessions."
+msgstr ""
+
+#. type: Plain text
+msgid "You can use this Persistent Storage to store, for example:"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid "Personal files"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid "Some settings"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid "Additional software"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid "Encryption keys"
+msgstr ""
+
+#. type: Plain text
+msgid ""
+"The Persistent Storage is an encrypted partition protected by a passphrase "
+"on the USB stick."
+msgstr ""
+
+#. type: Plain text
+msgid ""
+"After you create a Persistent Storage, you can choose to unlock it or not "
+"each time you start Tails."
+msgstr ""
+
+#. type: Plain text
+#, no-wrap
+msgid "[[!inline pages=\"doc/first_steps/persistence.caution\" raw=\"yes\" sort=\"age\"]]\n"
+msgstr "[[!inline pages=\"doc/first_steps/persistence.caution.ca\" raw=\"yes\" sort=\"age\"]]\n"
+
+#. type: Title =
+#, no-wrap
+msgid "How to use the Persistent Storage"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid ""
+"[[Warnings about the Persistent Storage|first_steps/persistence/warnings]]"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid ""
+"[[Creating and configuring the Persistent Storage|first_steps/persistence/"
+"configure]]"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid ""
+"[[Unlocking and using the Persistent Storage|first_steps/persistence/use]]"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid ""
+"[[Making a backup of your Persistent Storage|first_steps/persistence/backup]]"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid ""
+"[[Rescuing your Persistent Storage from a broken Tails|first_steps/"
+"persistence/rescue]]"
+msgstr ""
+
+#. type: Bullet: '  - '
+msgid "[[Deleting the Persistent Storage|first_steps/persistence/delete]]"
+msgstr ""
+
+msgid ""
+"How to use the persistent volume\n"
+"=================================\n"
+msgstr ""
+"Wie wird der beständige Speicherbereich benutzt?\n"
+"=================================\n"
+
+msgid ""
+"[[Change the passphrase of the persistent volume|first_steps/persistence/"
+"change_passphrase]]"
+msgstr ""
+"[[Die Passphrase des beständigen Speicherbereichs ändern|first_steps/"
+"persistence/change_passphrase]]"
+
+msgid ""
+"[[Check the file system of the persistent volume|first_steps/persistence/"
+"check_file_system]]"
+msgstr ""
+"[[Das Dateisystem des beständigen Speicherbereiches überprüfen|first_steps/"
+"persistence/check_file_system]]"
+
+msgid ""
+"<p>It is only possible to create a persistent volume if the USB stick\n"
+"was installed using <span class=\"application\">Tails Installer</span>.</p>\n"
+msgstr ""
+"<p>Es ist nur möglich, einen beständigen Speicherbereich zu erstellen, wenn "
+"der\n"
+"USB-Stick mit dem <span class=\"application\">Tails Installer</span> "
+"erstellt wurde.</p>\n"
+
+msgid "<p>This requires a USB stick of <strong>at least 8 GB</strong>.</p>\n"
+msgstr ""
+"<p>Voraussetzung ist ein USB-Stick mit <strong>mindestens 8 GB</strong>.</"
+"p>\n"
+
+msgid "your personal files and working documents"
+msgstr "Ihre persönlichen Dateien und Arbeitsdokumente"
+
+msgid "the software packages that you download and install in Tails"
+msgstr ""
+"Die Softwarepakete, die Sie in Tails heruntergeladen und installiert haben"
+
+msgid "the configuration of the programs you use"
+msgstr "Die Einstellungen der Programme, die Sie nutzen"
+
+#~ msgid "<div class=\"note\">\n"
+#~ msgstr "<div class=\"note\">\n"
+
+#~ msgid "</div>\n"
+#~ msgstr "</div>\n"
