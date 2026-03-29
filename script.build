@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# DELTA build script for Debian/Ubuntu cloud VMs.
+# Usage:
+#   bash script.build
+# Optional overrides:
+#   REPO_URL="https://github.com/AayushBhatt0/delta-os.git" BRANCH="main" REPO_DIR="$HOME/OS" bash script.build
+
+REPO_URL="${REPO_URL:-https://github.com/AayushBhatt0/delta-os.git}"
+REPO_DIR="${REPO_DIR:-$HOME/OS}"
+BRANCH="${BRANCH:-main}"
+TAILS_BUILD_OPTIONS="${TAILS_BUILD_OPTIONS:-noram ignorechanges cpus=$(nproc)}"
+
+if ! command -v apt-get >/dev/null 2>&1; then
+	echo "ERROR: apt-get not found. This script supports Debian/Ubuntu-based systems." >&2
+	exit 1
+fi
+
+if command -v sudo >/dev/null 2>&1; then
+	SUDO="sudo"
+else
+	SUDO=""
+fi
+
+export DEBIAN_FRONTEND=noninteractive
+
+echo "[1/10] Installing build dependencies..."
+$SUDO apt-get update
+$SUDO apt-get install -y \
+	psmisc \
+	git \
+	rake \
+	ruby \
+	ruby-dev \
+	ruby-libvirt \
+	libvirt-daemon-system \
+	dnsmasq-base \
+	ebtables \
+	faketime \
+	pigz \
+	qemu-system-x86 \
+	qemu-utils \
+	vmdb2 \
+	gnupg \
+	lsb-release \
+	curl \
+	ca-certificates
+
+echo "[2/10] Installing vagrant..."
+VAGRANT_CANDIDATE="$(apt-cache policy vagrant | awk '/Candidate:/ { print $2 }')"
+if [[ -n "${VAGRANT_CANDIDATE}" && "${VAGRANT_CANDIDATE}" != "(none)" ]]; then
+	$SUDO apt-get install -y vagrant
+else
+	echo "Vagrant package missing in distro repo. Adding HashiCorp apt repository..."
+	$SUDO install -d -m 0755 /usr/share/keyrings
+	curl -fsSL https://apt.releases.hashicorp.com/gpg | $SUDO gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+	DISTRO_CODENAME="$(lsb_release -cs)"
+	echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com ${DISTRO_CODENAME} main" | $SUDO tee /etc/apt/sources.list.d/hashicorp.list >/dev/null
+	$SUDO apt-get update
+	$SUDO apt-get install -y vagrant
+fi
+
+echo "[3/10] Verifying Ruby libvirt bindings..."
+if ! ruby -e "require 'libvirt'" >/dev/null 2>&1; then
+	echo "ruby-libvirt not available via current Ruby load path. Trying to install it now..."
+	RUBY_LIBVIRT_CANDIDATE="$(apt-cache policy ruby-libvirt | awk '/Candidate:/ { print $2 }')"
+	if [[ -n "${RUBY_LIBVIRT_CANDIDATE}" && "${RUBY_LIBVIRT_CANDIDATE}" != "(none)" ]]; then
+		$SUDO apt-get install -y ruby-libvirt
+	else
+		# Fallback for environments where ruby-libvirt is not provided by apt.
+		$SUDO gem install ruby-libvirt --no-document
+	fi
+fi
+
+echo "[4/10] Installing vagrant-libvirt..."
+VAGRANT_LIBVIRT_CANDIDATE="$(apt-cache policy vagrant-libvirt | awk '/Candidate:/ { print $2 }')"
+if [[ -n "${VAGRANT_LIBVIRT_CANDIDATE}" && "${VAGRANT_LIBVIRT_CANDIDATE}" != "(none)" ]]; then
+	$SUDO apt-get install -y vagrant-libvirt
+else
+	echo "vagrant-libvirt package missing in apt repo. Installing plugin build prerequisites..."
+	$SUDO apt-get install -y \
+		build-essential \
+		libvirt-dev \
+		ruby-dev \
+		pkg-config \
+		zlib1g-dev
+	echo "Installing vagrant-libvirt plugin via vagrant..."
+	vagrant plugin install vagrant-libvirt
+fi
+
+echo "[5/10] Enabling libvirt..."
+$SUDO systemctl enable --now libvirtd || true
+$SUDO systemctl restart libvirtd || true
+
+echo "[6/10] Adding user to virtualization groups..."
+CURRENT_USER="${SUDO_USER:-$USER}"
+for group in kvm libvirt libvirt-qemu; do
+	if getent group "$group" >/dev/null 2>&1; then
+		$SUDO usermod -aG "$group" "$CURRENT_USER" || true
+	fi
+done
+
+echo "[7/10] Checking KVM availability..."
+if [[ ! -e /dev/kvm ]]; then
+	echo "WARNING: /dev/kvm is missing. Nested virtualization may be disabled by your provider."
+	echo "Build can fail or be very slow without KVM acceleration."
+fi
+
+echo "[8/10] Cloning/updating source..."
+if [[ -d "$REPO_DIR/.git" ]]; then
+	cd "$REPO_DIR"
+	git fetch --all --prune
+	git checkout "$BRANCH"
+	git pull --ff-only || true
+else
+	git clone "$REPO_URL" "$REPO_DIR"
+	cd "$REPO_DIR"
+	git checkout "$BRANCH"
+fi
+
+echo "[9/11] Syncing submodules..."
+git submodule update --init --recursive
+
+echo "[10/11] Fixing executable permissions for build scripts..."
+# Repos initialized on Windows can lose executable bits when first imported.
+# Ensure key build entrypoints are executable before invoking rake.
+chmod +x auto/* 2>/dev/null || true
+chmod +x auto/scripts/* 2>/dev/null || true
+chmod +x bin/* 2>/dev/null || true
+chmod +x run_test_suite 2>/dev/null || true
+chmod +x build-website 2>/dev/null || true
+
+echo "[11/11] Building ISO..."
+export TAILS_BUILD_OPTIONS
+set +e
+rake build
+BUILD_EXIT=$?
+set -e
+
+# Try to shut down builder VM even on failure.
+rake vm:halt || true
+
+if [[ $BUILD_EXIT -ne 0 ]]; then
+	echo "Build failed with exit code $BUILD_EXIT"
+	exit $BUILD_EXIT
+fi
+
+echo "Build completed. Looking for artifacts..."
+ls -lh tails-* 2>/dev/null || echo "No tails-* artifacts found in $(pwd)"
+
+echo "Done."
