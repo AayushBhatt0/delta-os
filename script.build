@@ -132,6 +132,10 @@ fi
 echo "[9/11] Syncing submodules..."
 git submodule update --init --recursive
 
+# Rakefile assumes a top-level 'submodules' path exists.
+# Some fork clones may not have this path until explicitly created.
+mkdir -p submodules
+
 # On forks, origin/<base-branch> might not exist. Rake expects BASE_BRANCH_GIT_COMMIT
 # to be non-empty before it even checks build options.
 if [[ -z "${BASE_BRANCH_GIT_COMMIT:-}" ]]; then
@@ -155,6 +159,8 @@ echo "[10/11] Fixing executable permissions for build scripts..."
 chmod +x auto/* 2>/dev/null || true
 chmod +x auto/scripts/* 2>/dev/null || true
 chmod +x bin/* 2>/dev/null || true
+chmod +x vagrant/definitions/tails-builder/generate-tails-builder-box.sh 2>/dev/null || true
+find auto bin vagrant -type f -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
 chmod +x run_test_suite 2>/dev/null || true
 chmod +x build-website 2>/dev/null || true
 
