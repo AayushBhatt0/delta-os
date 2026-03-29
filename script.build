@@ -41,6 +41,9 @@ $SUDO apt-get install -y \
 	pigz \
 	qemu-system-x86 \
 	qemu-utils \
+	kpartx \
+	parted \
+	e2fsprogs \
 	vmdb2 \
 	acl \
 	gnupg \
@@ -116,6 +119,45 @@ if [[ ! -e /dev/kvm ]]; then
 	echo "WARNING: /dev/kvm is missing. Nested virtualization may be disabled by your provider."
 	echo "Build can fail or be very slow without KVM acceleration."
 fi
+
+echo "[7.5/10] Verifying loop/device-mapper support..."
+if [[ ! -e /dev/mapper/control ]]; then
+	echo "ERROR: /dev/mapper/control is missing."
+	echo "This environment cannot create mapper nodes required by vmdb2/kpartx."
+	echo "Use a privileged Linux VM (not a restricted container runtime)."
+	exit 1
+fi
+
+LOOP_BACKING_FILE="$(mktemp --tmpdir tails-loop-check-XXXXXX.img)"
+LOOP_MAP_NAME=""
+LOOP_DEV=""
+cleanup_loop_check() {
+	set +e
+	if [[ -n "${LOOP_DEV}" ]]; then
+		kpartx -dsv "${LOOP_DEV}" >/dev/null 2>&1 || true
+		losetup -d "${LOOP_DEV}" >/dev/null 2>&1 || true
+	fi
+	rm -f "${LOOP_BACKING_FILE}" >/dev/null 2>&1 || true
+	set -e
+}
+trap cleanup_loop_check EXIT
+
+truncate -s 64M "${LOOP_BACKING_FILE}"
+parted -s "${LOOP_BACKING_FILE}" mklabel msdos
+parted -s "${LOOP_BACKING_FILE}" -- mkpart primary ext4 1MiB 100%
+LOOP_DEV="$(losetup -f --show "${LOOP_BACKING_FILE}")"
+kpartx -asv "${LOOP_DEV}" >/dev/null
+LOOP_MAP_NAME="$(basename "${LOOP_DEV}")p1"
+if [[ ! -e "/dev/mapper/${LOOP_MAP_NAME}" ]]; then
+	echo "ERROR: kpartx did not create /dev/mapper/${LOOP_MAP_NAME}."
+	echo "This usually means your cloud environment blocks required device-mapper/udev behavior."
+	echo "Use a full VM with privileged kernel device access."
+	exit 1
+fi
+
+# Preflight passed; remove temporary loop mappings now.
+cleanup_loop_check
+trap - EXIT
 
 echo "[8/10] Cloning/updating source..."
 if [[ -d "$REPO_DIR/.git" ]]; then
